@@ -42,15 +42,12 @@ namespace WebApiCoreDocker.Controllers
         [HttpPost]
         public ActionResult Post([FromForm]Customer value)
         {
-            var response = new CustomerResponse();
-
             if (!string.IsNullOrEmpty(value.SecurityNumber))
             {
                 var customer = _db.Customers.Find(value.SecurityNumber);
                 if (customer != null)
                 {
-                    response.ErrorMessage = "Customer already exists.";
-                    return BadRequest(response);
+                    return BadRequest("Customer already exists.");
                 }
 
                 try
@@ -58,14 +55,12 @@ namespace WebApiCoreDocker.Controllers
                     _db.Customers.Add(value);
                     _db.SaveChanges();
 
-                    return Created("", response);
+                    return StatusCode(StatusCodes.Status201Created);
                 }
                 catch (Exception ex)
                 {
                     // Log message ex
-                    response.ErrorMessage = "Error on Customer saving ...";
-
-                    return BadRequest(response);
+                    return StatusCode(StatusCodes.Status500InternalServerError);
                 }
             }
 
@@ -78,7 +73,6 @@ namespace WebApiCoreDocker.Controllers
         {
             if (!string.IsNullOrEmpty(securityNumber) && securityNumber == value.SecurityNumber)
             {
-
                 var customer = _db.Customers.Find(securityNumber);
 
                 if (customer != null)
@@ -95,10 +89,8 @@ namespace WebApiCoreDocker.Controllers
                     catch (Exception ex)
                     {                        
                         // Log message
-                        var response = new CustomerResponse();
-                        response.ErrorMessage = "Error on Customer updating ...";
 
-                        return BadRequest(response);
+                        return StatusCode(StatusCodes.Status500InternalServerError);
                     }
                 }
             }
@@ -126,16 +118,11 @@ namespace WebApiCoreDocker.Controllers
                     catch (Exception ex)
                     {
                         // Log message                        
-                        var response = new CustomerResponse();
-                        response.ErrorMessage = "Error on Customer deleting ...";
-
-                        return BadRequest(response);
+                        return StatusCode(StatusCodes.Status500InternalServerError);
                     }
                 }
-                else
-                {
-                    return NotFound();
-                }
+                
+                return NotFound();                
             }
 
             return BadRequest();
