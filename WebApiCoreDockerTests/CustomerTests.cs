@@ -96,6 +96,65 @@ namespace WebApiCoreDockerTests
 
         #endregion EmailAddress tests  
 
+        #region SecurityNumber tests  
+
+        [Fact]
+        public void SecurityNumber_10Digits_IsValid()
+        {
+            var customer = new Customer
+            {
+                SecurityNumber = "1234567890",
+            };
+
+            Assert.DoesNotContain(ValidateModel(customer), v => v.MemberNames.Contains("SecurityNumber"));
+        }
+
+        [Fact]
+        public void SecurityNumber_12Digits_IsValid()
+        {
+            var customer = new Customer
+            {
+                SecurityNumber = "123456789012",
+            };
+
+            Assert.DoesNotContain(ValidateModel(customer), v => v.MemberNames.Contains("SecurityNumber"));
+        }
+
+        [Fact]
+        public void SecurityNumber_LessThan10Digits_IsNotValid()
+        {
+            var customer = new Customer
+            {
+                SecurityNumber = "12345678",
+            };
+
+            Assert.Contains(ValidateModel(customer), v => v.MemberNames.Contains("SecurityNumber"));
+        }
+
+        [Fact]
+        public void SecurityNumber_MoreThan12Digits_IsNotValid()
+        {
+            var customer = new Customer
+            {
+                SecurityNumber = "12345678901234567",
+            };
+
+            Assert.Contains(ValidateModel(customer), v => v.MemberNames.Contains("SecurityNumber"));
+        }
+
+        [Fact]
+        public void SecurityNumber_11Digits_IsNotValid()
+        {
+            var customer = new Customer
+            {
+                SecurityNumber = "12345678901",
+            };
+
+            Assert.Contains(ValidateModel(customer), v => v.MemberNames.Contains("SecurityNumber"));
+        }
+
+        #endregion SecurityNumber tests  
+
         private IList<ValidationResult> ValidateModel(object model)
         {
             var validationResults = new List<ValidationResult>();
