@@ -2,8 +2,9 @@
 
 [![Build Status](https://andriusviederis.visualstudio.com/WebApiCoreDocker/_apis/build/status/andvied.WebApiCoreDocker?branchName=master)](https://andriusviederis.visualstudio.com/WebApiCoreDocker/_build/latest?definitionId=7&branchName=master)
 
-## Prequisites
-Docker for Windows
+## Used for Development and Deploy
+Docker for Windows  
+Visual Studio 2019
 
 ## Run application
 
