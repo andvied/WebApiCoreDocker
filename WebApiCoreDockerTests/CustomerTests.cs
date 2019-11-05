@@ -9,6 +9,8 @@ namespace WebApiCoreDockerTests
 {
     public class CustomerTests
     {
+        #region PhoneNumber tests
+
         [Fact]
         public void PhoneNumber_StartingPlus46Following9Digits_IsValid()
         {
@@ -52,6 +54,47 @@ namespace WebApiCoreDockerTests
 
             Assert.Contains(ValidateModel(customer), v => v.MemberNames.Contains("PhoneNumber"));
         }
+
+        #endregion PhoneNumber tests
+
+        #region EmailAddress tests
+
+        [Fact]
+        public void EmailAddress_WitAtAndPoint_IsNotValid()
+        {
+            var customer = new Customer
+            {
+                EmailAddress = "test@test.test",
+            };
+
+            Assert.DoesNotContain(ValidateModel(customer), v => v.MemberNames.Contains("EmailAddress"));
+        }
+
+        [Fact]
+        public void EmailAddress_NoAt_IsNotValid()
+        {
+            var customer = new Customer
+            {
+                EmailAddress = "testtest.test",
+            };
+
+            Assert.Contains(ValidateModel(customer), v => v.MemberNames.Contains("EmailAddress"));
+        }
+
+        [Fact]
+        public void EmailAddress_NoPoint_IsNotValid()
+        {
+            // This is not validated by EmailAddress dataannotation
+            var customer = new Customer
+            {
+                EmailAddress = "test@testtest",
+            };
+
+            //this is validated by dataannotation with no errors
+            Assert.DoesNotContain(ValidateModel(customer), v => v.MemberNames.Contains("EmailAddress"));
+        }
+
+        #endregion EmailAddress tests  
 
         private IList<ValidationResult> ValidateModel(object model)
         {
