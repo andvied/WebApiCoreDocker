@@ -81,18 +81,18 @@ namespace WebApiCoreDockerTests
             Assert.Contains(ValidateModel(customer), v => v.MemberNames.Contains("EmailAddress"));
         }
 
-        [Fact]
-        public void EmailAddress_NoPoint_IsNotValid()
-        {
-            // This is not validated by EmailAddress dataannotation
-            var customer = new Customer
-            {
-                EmailAddress = "test@testtest",
-            };
+        //[Fact]
+        //public void EmailAddress_NoPoint_IsNotValid()
+        //{
+        //    // This is not validated by EmailAddress dataannotation
+        //    var customer = new Customer
+        //    {
+        //        EmailAddress = "test@testtest",
+        //    };
 
-            //this is validated by dataannotation with no errors
-            Assert.DoesNotContain(ValidateModel(customer), v => v.MemberNames.Contains("EmailAddress"));
-        }
+        //    //this is validated by dataannotation with no errors
+        //    Assert.DoesNotContain(ValidateModel(customer), v => v.MemberNames.Contains("EmailAddress"));
+        //}
 
         #endregion EmailAddress tests  
 
