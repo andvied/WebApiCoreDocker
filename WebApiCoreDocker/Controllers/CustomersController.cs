@@ -18,14 +18,7 @@ namespace WebApiCoreDocker.Controllers
         public CustomersController(AppDbContext db)
         {
             _db = db;
-        }
-
-        // GET api/values
-        [HttpGet]
-        public ActionResult<IEnumerable<Customer>> Get()
-        {
-            return _db.Customers;
-        }
+        }       
 
         // GET api/customers/1234567890
         [HttpGet("{securityNumber}")]
