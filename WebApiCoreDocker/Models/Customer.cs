@@ -10,6 +10,7 @@ namespace WebApiCoreDocker.Models
     {
         [Key]
         public string SecurityNumber { get; set; }
+        [RegularExpression(@"(^\+[4][6][0-9]{9})")]
         public string PhoneNumber { get; set; }
         public string EmailAddress { get; set; }
     }
